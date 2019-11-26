@@ -1,0 +1,28 @@
+function fixDig(x, dig=4){
+   //fixa o número de digitos de "x" para "dig" (arredondamento de máquina/trabalho)
+   function rnd(x) {
+      //arrendonda para o inteiro mais próximo
+      if (x >= 0) 
+         return Math.trunc(x + 0.5)
+      else
+         return -Math.trunc(-x + 0.5)
+   }
+   var di = Math.floor(Math.log10(Math.abs(x))) + 1; //dígitos da parte inteira
+   var df = dig - di;  //dígitos da parte fracionária
+   return 10 ** -df * rnd(10 ** df * x);
+}
+
+function fixDigV(v, dig = 4) {
+  //arredonda os elementos do vetor "v" com "dig" dígitos de máquina	
+  return v.map(x=>fixDig(x, dig));
+}
+
+fixDig(3.1886) //3.189
+
+fixDig(0.00050174) //0.0005017
+
+fixDig(4812572) //4813000
+
+fixDigV([3.1886, 0.00050174, 4812572]) //[3.189, 0.0005017, 4813000]
+
+fixDigV([3.1886, 0.00050174, 4812572], 3) //[3.19, 0.000502, 4810000]
